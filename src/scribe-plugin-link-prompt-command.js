@@ -54,8 +54,16 @@ define(function () {
               }
             }
           }
-
-          scribe.api.SimpleCommand.prototype.execute.call(this, link);
+          if(anchorNode) {
+            anchorNode.href = link
+            var bin = scribe.targetDocument.createElement("div");
+            bin.appendChild(anchorNode.cloneNode(true))
+            var command = new scribe.api.SimpleCommand("insertHTML")
+            command.execute(bin.innerHTML)
+          }
+          else {
+            scribe.api.SimpleCommand.prototype.execute.call(this, link);
+          }
         }
       };
 
